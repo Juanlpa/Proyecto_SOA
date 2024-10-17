@@ -1,0 +1,102 @@
+
+  .tituloe{
+    padding-top: 25px;
+    padding-bottom: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 25px;
+    color: black;
+    text-align: center;
+  }
+  header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+  }
+  nav{
+    position: relative;
+    margin: auto;
+    width: 100%;
+    height: auto;
+    background-color: #8a1b1f;
+    
+  }
+  nav ul{
+    position: relative;
+    margin: auto;
+    width: auto;
+    height: auto;
+    background-color: #8a1b1f;
+    text-align: center;
+    flex-wrap: nowrap;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+  }
+  ul a {
+    text-decoration: none;
+  }
+  nav ul li{
+    display: inline-block;
+    margin: auto;
+    width: auto;
+    line-height: 50px;
+    height: auto;
+    list-style: none;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    
+  }
+  .estilolista{
+    color: white;
+  }
+
+
+  footer {
+    background-color: #8a1b1f ;
+    color: #fff;
+    padding-top: 6px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif  ;
+}
+
+.contenedorFooter {
+    max-width: auto;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.universidad-titulo {
+  padding-top: 10px;
+    margin: 15;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.copyright {
+    margin: 0;
+    margin-bottom: 10px;
+    color: #e6e6e6;
+}
+
+.informacionContacto {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px;
+}
+
+.informacionContacto img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.js{
+    background-color: white;
+    align-items: center;
+    padding: 150px;
+
+}
+

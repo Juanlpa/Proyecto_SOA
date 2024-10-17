@@ -1,0 +1,52 @@
+.contactosContenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.cajaContacto {
+  width: 400px;
+  text-align: center;
+  background-color: #891317;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+}
+
+.cajaContacto h2 {
+  font-size: 36px;
+  outline: 2px solid #891317;
+  padding-bottom: 10px;
+  color: aliceblue;
+}
+
+.cajaContacto img {
+  width: 100px;
+  height: 100px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  
+}
+
+.cajaContacto p {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: aliceblue;
+}
+
+.cajaContacto ul {
+  background-color: #891317;
+  border-radius: 10px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  color: aliceblue;
+}
+
+.cajaContacto li {
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: aliceblue;
+  padding-bottom: 20px;
+}
