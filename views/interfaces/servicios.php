@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="css/styleservicios.css" type="text/css">
     <link rel="stylesheet" href="css/style1.css" type="text/css">
     <!-- estiloscon esuasi -->
-    <link rel="stylesheet" type="text/css" href="jquery/themes/black/easyui.css">
-    <link rel="stylesheet" type="text/css" href="jquery/themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="jquery/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/black/easyui.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
+
     <title>Servicios</title>
 </head>
 
@@ -196,8 +197,8 @@
     </script>
 
     <!--  javascript easyui -->
-    <script type="text/javascript" src="jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
     <!--  javascript easyui -->
 </body>
 

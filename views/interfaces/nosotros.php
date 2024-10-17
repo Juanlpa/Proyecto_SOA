@@ -84,7 +84,7 @@
 $(document).ready(function() {
     function cargarDatos() {
         $.ajax({
-            url: 'http://localhost/quinto/API.php',
+            url: 'http://localhost/Proyecto_SOA/controllers/API.php',
             method: 'GET',
             dataType: 'json',
             success: function(data) {
@@ -135,7 +135,7 @@ $(document).ready(function() {
     e.preventDefault();
     var cedulaOriginal = $('#cedulaOriginal').val();
     var method = cedulaOriginal ? 'PUT' : 'POST';
-    var url = 'http://localhost/quinto/API.php';
+    var url = 'http://localhost/Proyecto_SOA/controllers/API.php';
     var data = {
         cedula: $('#cedula').val(),
         nombre: $('#nombre').val(),
@@ -166,7 +166,7 @@ $(document).ready(function() {
     $('#tableBody').on('click', '.edit-btn', function() {
     var cedula = $(this).data('cedula');
     $.ajax({
-        url: `http://localhost/quinto/API.php?cedula=${cedula}`,
+        url: `http://localhost/Proyecto_SOA/controllers/API.php?cedula=${cedula}`,
         method: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -194,7 +194,7 @@ $(document).ready(function() {
     var cedula = $(this).data('cedula');
     if (confirm('¿Estás seguro de que deseas borrar este estudiante?')) {
         $.ajax({
-            url: `http://localhost/quinto/API.php?cedula=${cedula}`,
+            url: `http://localhost/Proyecto_SOA/controllers/API.php?cedula=${cedula}`,
             method: 'DELETE',
             success: function(response) {
                 cargarDatos();
