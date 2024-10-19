@@ -143,7 +143,7 @@ $(document).ready(function() {
         direccion: $('#direccion').val(),
         telefono: $('#telefono').val()
     };
-    if (method === 'PUT') {
+    if (method === 'PUT') { 
         url += `?cedula=${cedulaOriginal}`;
     }
     

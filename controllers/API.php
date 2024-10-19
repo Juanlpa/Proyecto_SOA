@@ -50,6 +50,7 @@ switch ($opc) {
         $telefono = $putData['telefono'];
         $crud->actualizarEstudiante($cedula, $nombre, $apellido, $direccion, $telefono);
         return;
+         
     /*
     case "PUT":
         // Probar en PostMan con:
