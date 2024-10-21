@@ -4,15 +4,26 @@ include '../models/conexion.php';
 header("Content-Type: application/json");
 session_start();
 
-// Verifica si los datos fueron enviados
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Obtener los datos enviados en el cuerpo de la solicitud
-    $data = json_decode(file_get_contents("php://input"));
+// Obtener los datos enviados en el cuerpo de la solicitud
+$data = json_decode(file_get_contents("php://input"));
 
-    if (isset($data->usuario) && isset($data->contra) && isset($data->redirect_page)) {
+// Verificar si se envió la acción de logout
+if (isset($data->action) && $data->action === 'logout') {
+    // Destruir la sesión y responder con éxito
+    session_destroy();
+    echo json_encode([
+        'status' => 'success',
+        'message' => 'Logout successful'
+    ]);
+    exit();  // Terminar la ejecución
+}
+
+// Si no es una solicitud de logout, procesar el login
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($data->usuario) && isset($data->contra)) {
         $usuario = $data->usuario;
         $contra = $data->contra;
-        $redirect_page = $data->redirect_page;
+        $redirectPage = $data->redirectPage;  // Recibimos la página de redirección
 
         // Conectar a la base de datos
         $conexion = new Conexion();
@@ -30,11 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($row) {
             $_SESSION['usuario'] = $usuario;
 
-            // Responder con éxito y la página de redirección correcta
+            // Responder con éxito y devolver la página de redirección
             echo json_encode([
                 'status' => 'success',
                 'message' => 'Login successful',
-                'redirect' => $redirect_page  // Enviar la página correcta para redirigir
+                'redirectPage' => $redirectPage  // Devolvemos la página a la que debe redirigir
             ]);
         } else {
             // Responder con error
@@ -44,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ]);
         }
     } else {
-        // Si faltan campos
+        // Si faltan campos en la solicitud de login
         echo json_encode([
             'status' => 'error',
             'message' => 'Missing fields'
