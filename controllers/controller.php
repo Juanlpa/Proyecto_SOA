@@ -6,7 +6,6 @@ class McvController {
     }
 
     function enlacesPaginasController() {
-        session_start();
         if (isset($_GET['action'])) {
             $enlacesControlador = $_GET['action'];
             if ($enlacesControlador == 'servicios' && isset($_SESSION['usuario'])) {

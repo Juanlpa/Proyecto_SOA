@@ -20,7 +20,7 @@ if (isset($data->action) && $data->action === 'logout') {
 
 // Si no es una solicitud de logout, procesar el login
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($data->usuario) && isset($data->contra)) {
+    if (isset($data->usuario) && isset($data->contra) && isset($data->redirectPage)) {
         $usuario = $data->usuario;
         $contra = $data->contra;
         $redirectPage = $data->redirectPage;  // Recibimos la página de redirección

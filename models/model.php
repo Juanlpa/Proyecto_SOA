@@ -1,4 +1,8 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 class EnlacesPaginas {
     static function enlacesPaginasModel($enlacesModel) {
         if ($enlacesModel == "nosotros" || $enlacesModel == "logueadoe") {
