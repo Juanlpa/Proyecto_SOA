@@ -1,5 +1,6 @@
 <?php
 include_once('conexion.php');
+
 class CRUD
 {
     private $conexion;
@@ -9,66 +10,47 @@ class CRUD
     }
 
     public function obtenerEstudiantes(){
-        $this->conexion->conectar();
+        $conn = $this->conexion->conectar();
 
-        $sql = "SELECT * FROM estudiantes";
-        $resul = $this->conexion->conectar()->prepare($sql);
-        $resul->execute();
-        $data = $resul->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT e.estCedula, e.estNombre, e.estApellido, e.estTelefono, e.estDireccion, e.curId, c.nombre AS nombreCurso 
+                FROM estudiantes e 
+                INNER JOIN cursos c ON c.curId = e.curId";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($data);
     }
 
-    public function obtenerEstudiante($cedula){
-        $this->conexion->conectar();
+    public function obtenerEstudianteCondiciones($cedula, $nombre){
+        $conn = $this->conexion->conectar();
 
-        $sql = "SELECT * FROM estudiantes WHERE estCedula = :cedula";
-        $resul = $this->conexion->conectar()->prepare($sql);
-        $resul->bindParam(':cedula', $cedula);
-        $resul->execute();
+        $sql = "SELECT e.estCedula, e.estNombre, e.estApellido, e.estTelefono, e.estDireccion, e.curId, c.nombre AS nombreCurso 
+                FROM estudiantes e 
+                INNER JOIN cursos c ON c.curId = e.curId 
+                WHERE e.estCedula LIKE :cedula AND e.estNombre LIKE :nombre";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':cedula', "%$cedula%");
+        $stmt->bindValue(':nombre', "%$nombre%");
+        $stmt->execute();
 
-        $data = $resul->fetch(PDO::FETCH_ASSOC);
-        echo json_encode($data);
-    }
-
-    public function obtenerEstudianteCondiciones($parametro1, $parametro2){
-        $this->conexion->conectar();
-
-        $sql = "SELECT * FROM estudiantes WHERE estCedula LIKE :cedula AND estNombre LIKE :nombre";
-        $resul = $this->conexion->conectar()->prepare($sql);
-        $cedula = "%$parametro1%";
-        $nombre = "%$parametro2%";
-        $resul->bindParam(':cedula', $cedula);
-        $resul->bindParam(':nombre', $nombre);
-        $resul->execute();
-
-        $data = $resul->fetchAll(PDO::FETCH_ASSOC);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($data);
     }
 
     public function guardarEstudiante() {
         try {
-            $this->conexion->conectar();
             $conn = $this->conexion->conectar();
             $conn->beginTransaction();
-    
-            // Aquí asegúrate de que las claves sean correctas
-            $cedula = $_POST['estCedula']; // Asegúrate de que sea 'estCedula'
-            $nombre = $_POST['estNombre'];   // Asegúrate de que sea 'estNombre'
-            $apellido = $_POST['estApellido']; // Asegúrate de que sea 'estApellido'
-            $direccion = $_POST['estDireccion']; // Asegúrate de que sea 'estDireccion'
-            $telefono = $_POST['estTelefono']; // Asegúrate de que sea 'estTelefono'
-            $curId = $_POST['curId']; // Asegúrate de que tengas este campo en tu formulario
     
             $sql = "INSERT INTO estudiantes (estCedula, estNombre, estApellido, estDireccion, estTelefono, curId) 
                     VALUES (:cedula, :nombre, :apellido, :direccion, :telefono, :curId)";
             $stmt = $conn->prepare($sql);
-    
-            $stmt->bindParam(':cedula', $cedula);
-            $stmt->bindParam(':nombre', $nombre);
-            $stmt->bindParam(':apellido', $apellido);
-            $stmt->bindParam(':direccion', $direccion);
-            $stmt->bindParam(':telefono', $telefono);
-            $stmt->bindParam(':curId', $curId);
+            $stmt->bindParam(':cedula', $_POST['estCedula']);
+            $stmt->bindParam(':nombre', $_POST['estNombre']);
+            $stmt->bindParam(':apellido', $_POST['estApellido']);
+            $stmt->bindParam(':direccion', $_POST['estDireccion']);
+            $stmt->bindParam(':telefono', $_POST['estTelefono']);
+            $stmt->bindParam(':curId', $_POST['curId']);
     
             if ($stmt->execute()) {
                 $conn->commit();
@@ -82,11 +64,9 @@ class CRUD
             echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
         }
     }
-    
 
     public function eliminarEstudiante($cedula) {
         try {
-            $this->conexion->conectar();
             $conn = $this->conexion->conectar();
             $conn->beginTransaction();
 
@@ -107,29 +87,45 @@ class CRUD
         }
     }
 
-    public function actualizarEstudiante($cedula, $nombre, $apellido, $direccion, $telefono) {
+
+    public function obtenerEstudiantePorCedula($cedula) {
+        $conn = $this->conexion->conectar();
+    
+        $sql = "SELECT e.estCedula, e.estNombre, e.estApellido, e.estTelefono, e.estDireccion, e.curId, c.nombre AS nombreCurso 
+                FROM estudiantes e 
+                INNER JOIN cursos c ON c.curId = e.curId 
+                WHERE e.estCedula = :cedula";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':cedula', $cedula);
+        $stmt->execute();
+    
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode($data);
+    }
+    
+
+    public function actualizarEstudiante($cedula, $nombre, $apellido, $direccion, $telefono, $curId) {
         try {
-            $this->conexion->conectar();
             $conn = $this->conexion->conectar();
             $conn->beginTransaction();
     
-            $sql = "UPDATE estudiantes SET estNombre = :nombre, estApellido = :apellido, estDireccion = :direccion, estTelefono = :telefono 
-                    WHERE estCedula = :cedula";
+            $sql = "UPDATE estudiantes 
+                    SET estNombre = :nombre, estApellido = :apellido, estDireccion = :direccion, estTelefono = :telefono, curId = :curId 
+                    WHERE estCedula = :cedula"; // Asegúrate de que aquí incluimos curId
             $stmt = $conn->prepare($sql);
-    
             $stmt->bindParam(':cedula', $cedula);
             $stmt->bindParam(':nombre', $nombre);
             $stmt->bindParam(':apellido', $apellido);
             $stmt->bindParam(':direccion', $direccion);
             $stmt->bindParam(':telefono', $telefono);
+            $stmt->bindParam(':curId', $curId); // No olvides incluir esto
     
             if ($stmt->execute()) {
                 $conn->commit();
                 echo json_encode(['success' => true, 'message' => 'Estudiante actualizado exitosamente']);
             } else {
                 $conn->rollBack();
-                $errorInfo = $stmt->errorInfo(); // Obtener información sobre el error
-                echo json_encode(['success' => false, 'message' => 'Error al actualizar el estudiante: ' . $errorInfo[2]]);
+                echo json_encode(['success' => false, 'message' => 'Error al actualizar el estudiante']);
             }
         } catch (PDOException $e) {
             $conn->rollBack();
@@ -137,15 +133,16 @@ class CRUD
         }
     }
     
+
     
 
     public function obtenerCursos() {
-        $this->conexion->conectar();
+        $conn = $this->conexion->conectar();
 
-        $sql = "SELECT * FROM cursos"; // Asegúrate de que esta consulta sea correcta
-        $resul = $this->conexion->conectar()->prepare($sql);
-        $resul->execute();
-        $data = $resul->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM cursos";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($data);
     }
 }
