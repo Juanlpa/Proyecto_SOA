@@ -11,7 +11,7 @@ class Conexion
             $conn = new PDO("mysql:host=" . $host . ";dbname=" . $db, $usuario, $psw);
             //print_r("Estás conectado");
             return $conn;
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             die("Error en la conexión: " . $e->getMessage());
         }
         

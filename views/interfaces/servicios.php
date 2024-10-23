@@ -4,33 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/logo.png" type="image/png">
-    <!--  Mis estiloss -->
     <link rel="stylesheet" href="css/styleservicios.css" type="text/css">
     <link rel="stylesheet" href="css/style1.css" type="text/css">
-    <!-- estiloscon esuasi -->
     <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/black/easyui.css">
     <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
     <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
-
     <title>Servicios</title>
 </head>
 
 <body>
-    <h2 class="tituloe">TALBA EASYUI DE ESTUDIANTES</h2>
-    <!-- TABLA CON EASTYUI -->
+    <h2 class="tituloe">TABLA EASYUI DE ESTUDIANTES</h2>
     <center>
         <section class="table-responsive">
-            <table id="dg" title="My Users" class="easyui-datagrid" style="width:700px;height:250px"
+            <table id="dg" title="Estudiantes" class="easyui-datagrid" style="width:700px;height:250px"
                 url="http://localhost/Proyecto_SOA/controllers/API.php" method="GET"
                 toolbar="#toolbar" pagination="true"
                 rownumbers="true" fitColumns="true" singleSelect="true">
                 <thead>
                     <tr>
-                        <th field="cedula" width="50">CEDULA</th>
-                        <th field="nombre" width="50">NOMBRE</th>
-                        <th field="apellido" width="50">APELLIDO</th>
-                        <th field="direccion" width="50">DIRECCION</th>
-                        <th field="telefono" width="50">TELEFONO</th>
+                        <th field="estCedula" width="50">CÉDULA</th>
+                        <th field="estNombre" width="50">NOMBRE</th>
+                        <th field="estApellido" width="50">APELLIDO</th>
+                        <th field="estDireccion" width="50">DIRECCIÓN</th>
+                        <th field="estTelefono" width="50">TELÉFONO</th>
+                        <th field="curId" width="50">CURSO</th> <!-- Añadir el curso -->
                     </tr>
                 </thead>
             </table>
@@ -38,8 +35,9 @@
                 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">NUEVO</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">EDITAR</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">ELIMINAR</a>
-                <input id="buscarCedula" class="easyui-textbox" label="Buscar:" style="width:300px">
+                <input id="buscarCedula" class="easyui-textbox" label="Buscar:" style="width:200px">
                 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="buscarEstudiante()">Buscar</a>
+                <input id="buscarNombre" class="easyui-textbox" label="Buscar por nombre:" style="width:200px">
                 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-reload " onclick="recargar()"></a>
             </div>
 
@@ -48,31 +46,41 @@
                 <input type="hidden" id="cedulaOriginal">    
                 <h3>INGRESE ESTUDIANTE</h3>
                     <div style="margin-bottom:10px">
-                        <input id="cedula" name="cedula" class="easyui-textbox" required="true" label="CEDULA:" style="width:100%">
+                        <input id="estCedula" name="estCedula" class="easyui-textbox" required="true" label="CÉDULA:" style="width:100%">
                     </div>
                     <div style="margin-bottom:10px">
-                        <input id="nombre" name="nombre" class="easyui-textbox" required="true" label="NOMBRE:" style="width:100%">
+                        <input id="estNombre" name="estNombre" class="easyui-textbox" required="true" label="NOMBRE:" style="width:100%">
                     </div>
                     <div style="margin-bottom:10px">
-                        <input id="apellido" name="apellido" class="easyui-textbox" required="true" label="APELLIDO:" style="width:100%">
+                        <input id="estApellido" name="estApellido" class="easyui-textbox" required="true" label="APELLIDO:" style="width:100%">
                     </div>
                     <div style="margin-bottom:10px">
-                        <input id="direccion" name="direccion" class="easyui-textbox" required="true" label="DIRECCION" style="width:100%">
+                        <input id="estDireccion" name="estDireccion" class="easyui-textbox" required="true" label="DIRECCIÓN" style="width:100%">
                     </div>
                     <div style="margin-bottom:10px">
-                        <input id="telefono" name="telefono" class="easyui-textbox" required="true" label="TELEFONO" style="width:100%">
+                        <input id="estTelefono" name="estTelefono" class="easyui-textbox" required="true" label="TELÉFONO" style="width:100%">
+                    </div>
+                    <div style="margin-bottom:10px">
+                        <select id="curId" name="curId" class="easyui-combobox" label="CURSO:" style="width:100%" required="true">
+                            <option value="1">Primero</option>
+                            <option value="2">Segundo</option>
+                            <option value="3">Tercero</option>
+                            <option value="4">Cuarto</option>
+                        </select>
                     </div>
                 </form>
             </div>
+
             <div id="dlg-buttons">
                 <button type="submit" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()" style="width:120px">GUARDAR</button>
                 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:120px">CANCELAR</a>
             </div>
         </section>
     </center>
+
     <script type="text/javascript">
     var url;
-    var isNew = true;  // Variable para identificar si es una creación o edición
+    var isNew = true;
 
     function recargar() {
         $('#dg').datagrid('reload');
@@ -81,34 +89,34 @@
     function newUser() {
         $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Nuevo Estudiante');
         $('#fm').form('clear');
-        isNew = true;  // Es un nuevo estudiante
+        isNew = true;
         url = 'http://localhost/Proyecto_SOA/controllers/API.php';  // URL para POST
     }
 
     function editUser() {
-        var row = $('#dg').datagrid('getSelected');
-        if (row) {
-            $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Editar Estudiante');
-            $('#fm').form('load', row);
-            isNew = false;  // Estamos editando
-            url = 'http://localhost/Proyecto_SOA/controllers/API.php?cedula=' + row.cedula;  // URL para PUT
-        }
+    var row = $('#dg').datagrid('getSelected');
+    if (row) {
+        $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Editar Estudiante');
+        $('#fm').form('load', row);
+        $('#curId').combobox('setValue', row.curId);  // Cargar el curso seleccionado
+        isNew = false;
+        url = 'http://localhost/Proyecto_SOA/controllers/API.php?cedula=' + row.estCedula;  // URL para POST
     }
+}
 
-    
-    function saveUser() {
-    var method = isNew ? 'POST' : 'PUT';  // Determina si es POST o PUT
-    var formData = $('#fm').serialize();  // Serializar los datos del formulario
+
+function saveUser() {
+    var formData = $('#fm').serialize(); // Serializa los datos del formulario
 
     $.ajax({
-        url: url,
-        type: method,
-        data: formData,
+        url: url, // La URL que se establece en editUser o newUser
+        type: 'POST', // Método POST para guardar o actualizar
+        data: formData, // Datos del formulario
         success: function(result) {
-            var result = JSON.parse(result);  // Si el resultado es un string JSON, convertirlo a objeto
+            var result = JSON.parse(result);
             if (result.success) {
-                $('#dlg').dialog('close');  // Cierra el diálogo
-                $('#dg').datagrid('reload');  // Recarga los datos
+                $('#dlg').dialog('close');
+                $('#dg').datagrid('reload');
                 $.messager.show({
                     title: 'Éxito',
                     msg: result.message
@@ -127,66 +135,66 @@
             });
         }
     });
+}
 
-    console.log(method);
-    console.log(url);
+    function destroyUser() {
+    var row = $('#dg').datagrid('getSelected');
+    if (row) {
+        $.messager.confirm('Confirmar', '¿Estás seguro de que quieres eliminar este estudiante?', function(r) {
+            if (r) {
+                $.ajax({
+                    url: 'http://localhost/Proyecto_SOA/controllers/API.php?cedula=' + row.estCedula, // Cambia a 'cedula'
+                    type: 'DELETE',
+                    success: function(result) {
+                        $('#dg').datagrid('reload');
+                        $.messager.show({
+                            title: 'Estudiante Eliminado',
+                            msg: 'El estudiante ha sido eliminado exitosamente.'
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        $.messager.show({
+                            title: 'Error',
+                            msg: 'Hubo un error al eliminar el estudiante: ' + error // Mejora el manejo de errores
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        $.messager.show({
+            title: 'Error',
+            msg: 'Por favor, selecciona un estudiante primero.'
+        });
+    }
 }
 
 
-    function destroyUser() {
-        var row = $('#dg').datagrid('getSelected');
-        if (row) {
-            $.messager.confirm('Confirmar', '¿Estás seguro de que quieres eliminar este estudiante?', function(r) {
-                if (r) {
-                    $.ajax({
-                        url: 'http://localhost/Proyecto_SOA/controllers/API.php?cedula=' + row.cedula,
-                        type: 'DELETE',
-                        success: function(result) {
-                            $('#dg').datagrid('reload');
-                            $.messager.show({
-                                title: 'Estudiante Eliminado',
-                                msg: 'El estudiante ha sido eliminado exitosamente.'
-                            });
-                        },
-                        error: function() {
-                            $.messager.show({
-                                title: 'Error',
-                                msg: 'Hubo un error al eliminar el estudiante.'
-                            });
-                        }
-                    });
-                }
+
+function buscarEstudiante() {
+    var estCedula = $('#buscarCedula').textbox('getValue'); // Obtener el valor de la cédula
+    // Si necesitas buscar también por nombre, podrías agregar un campo de entrada adicional
+    var estNombre = $('#buscarNombre').textbox('getValue'); // Supón que tienes otro campo para nombre
+
+    // Solo enviar cédula si existe
+    $.ajax({
+        url: 'http://localhost/Proyecto_SOA/controllers/API.php?estCedula=' + estCedula + '&estNombre=' + estNombre,
+        method: 'GET',
+        success: function(result) {
+            var estudiantes = JSON.parse(result);
+            $('#dg').datagrid('loadData', estudiantes);
+        },
+        error: function() {
+            $.messager.show({
+                title: 'Error',
+                msg: 'No se encontró ningún estudiante con los criterios proporcionados.'
             });
         }
-    }
-
-    function buscarEstudiante() {
-        var cedula = $('#buscarCedula').textbox('getValue');
-        if (cedula) {
-            $.ajax({
-                url: 'http://localhost/Proyecto_SOA/controllers/API.php?cedula=' + cedula,
-                method: 'GET',
-                success: function(result) {
-                    var data = typeof result === 'string' ? JSON.parse(result) : result;
-                    if (Array.isArray(data) && data.length > 0) {
-                        $('#dg').datagrid('loadData', data);
-                    } else if (typeof data === 'object' && Object.keys(data).length > 0) {
-                        $('#dg').datagrid('loadData', [data]);
-                    } else {
-                        $.messager.alert('No encontrado', 'No se encontró un estudiante con la cédula proporcionada', 'info');
-                    }
-                },
-                error: function() {
-                    $.messager.alert('Error', 'No se pudo conectar al servidor', 'error');
-                }
-            });
-        } else {
-            $.messager.alert('Error', 'Por favor ingresa una cédula para buscar', 'error');
-        }
-    }
-</script>
+    });
+}
 
 
+    </script>
     <!--  javascript easyui -->
     <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>

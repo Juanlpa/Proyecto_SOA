@@ -12,58 +12,62 @@
     <main class="contenido">
     <div class="InicioSes">
     <form id="formDelLogin" class="formDelLogin">
-  <h3>Inicia Sesion</h3>
-  <div class="EstilosForm">
-    <label for="usuario">Usuario</label>
-    <input type="text" id="usuario" name="usuario" required>
-  </div>
-  <div class="EstilosForm">
-    <label for="contra">Contraseña</label>
-    <input type="password" id="contra" name="contra" required>
-  </div>
-  <div class="EstilosForm">
-    <input type="submit" value="Iniciar sesión">
-  </div>
-</form>
-<p id="error-msg" style="color: red;"></p>
+      <h3>Inicia Sesion</h3>
+      <div class="EstilosForm">
+        <label for="usuario">Usuario</label>
+        <input type="text" id="usuario" name="usuario" required>
+      </div>
+      <div class="EstilosForm">
+        <label for="contra">Contraseña</label>
+        <input type="password" id="contra" name="contra" required>
+      </div>
+      <div class="EstilosForm">
+        <input type="hidden" id="redirect_page" name="redirect_page"> <!-- Campo oculto para la redirección -->
+      </div>
+      <div class="EstilosForm">
+        <input type="submit" value="Iniciar sesión">
+      </div>
+    </form>
+    <p id="error-msg" style="color: red;"></p>
   </div>
     </main>  
 
     <script>
-    $(document).ready(function() {
-        $('#formDelLogin').on('submit', function(e) {
-            e.preventDefault();
-
-            const usuario = $('#usuario').val();
-            const contra = $('#contra').val();
-
-            // Capturar la página actual (parámetro 'action' de la URL)
+        $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const currentPage = urlParams.get('action') || 'inicio';  // Si no hay 'action', usar 'inicio' como predeterminado
+            const currentPage = urlParams.get('action') || 'inicio';
 
-            $.ajax({
-                url: 'http://localhost/Proyecto_SOA/controllers/apiLogin.php',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    usuario: usuario,
-                    contra: contra,
-                    redirectPage: currentPage  // Enviamos la página actual como parte de la solicitud
-                }),
-                success: function(response) {
-                    if (response.status === 'success') {
-                        // Redirigir a la página que el usuario estaba visitando antes del login
-                        window.location.href = 'index.php?action=' + response.redirectPage;
-                    } else {
-                        $('#error-msg').text(response.message);
+            $('#redirect_page').val(currentPage);
+
+            $('#formDelLogin').on('submit', function(e) {
+                e.preventDefault();
+
+                const usuario = $('#usuario').val();
+                const contra = $('#contra').val();
+                const redirect_page = $('#redirect_page').val();
+
+                $.ajax({
+                    url: 'http://localhost/Proyecto_SOA/controllers/apiLogin.php',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        usuario: usuario,
+                        contra: contra,
+                        redirect_page: redirect_page
+                    }),
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            window.location.href = 'index.php?action=' + response.redirect;
+                        } else {
+                            $('#error-msg').text(response.message);
+                        }
+                    },
+                    error: function() {
+                        $('#error-msg').text('Error en la conexión con el servidor');
                     }
-                },
-                error: function() {
-                    $('#error-msg').text('Error en la conexión con el servidor');
-                }
+                });
             });
         });
-    });
-</script>
+    </script>
 </body>
 </html>
