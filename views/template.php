@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style1.css" type="text/css">
@@ -15,7 +16,7 @@
             <li><a class="estilolista" href="index.php?action=nosotros">Nosostros</a></li>
             <li><a class="estilolista" href="index.php?action=servicios">Servicios</a></li>
             <li><a class="estilolista" href="index.php?action=contactanos">Contacto</a></li>
-            <li><a class="estilolista" href="index.php?action=logout">Cerrar Sesion</a></li>
+            <li><a class="estilolista" onclick="logoutUser()" id="logout">Cerrar Sesion</a></li>
         </ul>
     </nav>
 <section>
@@ -37,6 +38,30 @@
                 </div>
             </footer>
     </div>
+    <script>
+    function logoutUser() {
+        // Obtener la página actual de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentPage = urlParams.get('action') || 'inicio';  // Si no hay 'action', redirigir a 'inicio'
 
+        $.ajax({
+            url: 'http://localhost/Proyecto_SOA/controllers/apiLogin.php',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ action: 'logout' }),  // Enviar la acción de logout
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Redirigir a la página actual después del logout
+                    window.location.href = 'index.php?action=' + currentPage;
+                } else {
+                    alert(response.message);  // Mostrar mensaje de error si lo hay
+                }
+            },
+            error: function() {
+                alert('Error en la conexión con el servidor');
+            }
+        });
+    }
+</script>   
 </body>
 </html>

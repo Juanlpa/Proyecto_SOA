@@ -3,12 +3,21 @@ include '../models/conexion.php';
 
 header("Content-Type: application/json");
 session_start();
-
-// Verifica si los datos fueron enviados
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Obtener los datos enviados en el cuerpo de la solicitud
     $data = json_decode(file_get_contents("php://input"));
+// Verifica si los datos fueron enviados
 
+// Verificar si se envió la acción de logout
+if (isset($data->action) && $data->action === 'logout') {
+    // Destruir la sesión y responder con éxito
+    session_destroy();
+    echo json_encode([
+        'status' => 'success',
+        'message' => 'Logout successful'
+    ]);
+    exit();  // Terminar la ejecución
+}
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($data->usuario) && isset($data->contra) && isset($data->redirect_page)) {
         $usuario = $data->usuario;
         $contra = $data->contra;  // Contraseña enviada por el usuario

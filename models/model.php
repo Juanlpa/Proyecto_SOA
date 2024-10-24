@@ -1,5 +1,7 @@
 <?php
+
 class EnlacesPaginas {
+    
     static function enlacesPaginasModel($enlacesModel) {
         if ($enlacesModel == "nosotros" || $enlacesModel == "logueadoe") {
             $module = "views/interfaces/" . $enlacesModel . ".php";
