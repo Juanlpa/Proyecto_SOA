@@ -3,10 +3,10 @@ class Conexion
 {
     public function conectar()
     {
-        $host = "localhost";
-        $db = "quinto";
-        $usuario = "root";
-        $psw = "";
+        $host = "fdb1029.awardspace.net";
+        $db = "4498731_visual";
+        $usuario = "4498731_visual";
+        $psw = "Galaxilife1";
         try {
             $conn = new PDO("mysql:host=" . $host . ";dbname=" . $db, $usuario, $psw);
             //print_r("Estás conectado");

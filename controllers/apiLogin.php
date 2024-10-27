@@ -1,8 +1,9 @@
 <?php
+session_start(); // Esta línea debe estar al principio
+
 include '../models/conexion.php';
 
 header("Content-Type: application/json");
-session_start();
 
 // Verifica si los datos fueron enviados
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

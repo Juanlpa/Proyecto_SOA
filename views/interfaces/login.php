@@ -1,3 +1,6 @@
+<?php
+session_start(); // Asegúrate de que esta línea esté al principio del archivo
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +50,7 @@
                 const redirect_page = $('#redirect_page').val();
 
                 $.ajax({
-                    url: 'http://localhost/Proyecto_SOA/controllers/apiLogin.php',
+                    url: 'http://proyectosoa.atwebpages.com/controllers/apiLogin.php',
                     method: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({
