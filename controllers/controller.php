@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 class McvController {
     public function plantilla() {
         require_once 'views/template.php';
