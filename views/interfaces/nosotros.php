@@ -113,7 +113,7 @@
         $(document).ready(function() {
             // Cargar los estudiantes
             function cargarDatos(query = '') {
-                var url = 'http://localhost/Proyecto_SOA/controllers/API.php?entity=estudiantes' + query;
+                var url = 'https://proyecto-soa.onrender.com/controllers/API.php?entity=estudiantes' + query;
                 $.ajax({
                     url: url,
                     method: 'GET',
@@ -154,7 +154,7 @@
             // Cargar los cursos
             function cargarCursos() {
                 $.ajax({
-                    url: 'http://localhost/Proyecto_SOA/controllers/API.php?cursos=1',
+                    url: 'https://proyecto-soa.onrender.com/controllers/API.php?cursos=1',
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
@@ -212,7 +212,7 @@
 $('#tableBody').on('click', '.edit-btn', function() {
     var cedula = $(this).data('cedula'); // Obtener la cédula del botón
     $.ajax({
-        url: `http://localhost/Proyecto_SOA/controllers/API.php?cedula=${cedula}`,
+        url: `https://proyecto-soa.onrender.com/controllers/API.php?cedula=${cedula}`,
         method: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -245,7 +245,7 @@ $('#tableBody').on('click', '.edit-btn', function() {
                 e.preventDefault();
                 var cedulaOriginal = $('#cedulaOriginal').val();
                 var method = cedulaOriginal ? 'PUT' : 'POST';
-                var url = 'http://localhost/Proyecto_SOA/controllers/API.php?entity=estudiantes';
+                var url = 'https://proyecto-soa.onrender.com/controllers/API.php?entity=estudiantes';
                 var data = {
                     estCedula: $('#estCedula').val(),
                     estNombre: $('#estNombre').val(),
@@ -274,7 +274,7 @@ $('#tableBody').on('click', '.edit-btn', function() {
                 var cedula = $(this).data('cedula');
                 if (confirm('¿Seguro que quieres borrar este estudiante?')) {
                     $.ajax({
-                        url: `http://localhost/Proyecto_SOA/controllers/API.php?cedula=${cedula}`,
+                        url: `https://proyecto-soa.onrender.com/controllers/API.php?cedula=${cedula}`,
                         method: 'DELETE',
                         success: function() {
                             cargarDatos();
