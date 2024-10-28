@@ -17,7 +17,7 @@
     <center>
         <section class="table-responsive">
             <table id="dg" title="Estudiantes" class="easyui-datagrid" style="width:700px;height:250px"
-                url="http://localhost/Proyecto_SOA/controllers/API.php" method="GET"
+                url="https://proyecto-soa.onrender.com/controllers/API.php" method="GET"
                 toolbar="#toolbar" pagination="true"
                 rownumbers="true" fitColumns="true" singleSelect="true">
                 <thead>
@@ -90,7 +90,7 @@
         $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Nuevo Estudiante');
         $('#fm').form('clear');
         isNew = true;
-        url = 'http://localhost/Proyecto_SOA/controllers/API.php';  // URL para POST
+        url = 'https://proyecto-soa.onrender.com/controllers/API.php';  // URL para POST
     }
 
     function editUser() {
@@ -100,7 +100,7 @@
         $('#fm').form('load', row);
         $('#curId').combobox('setValue', row.curId);  // Cargar el curso seleccionado
         isNew = false;
-        url = 'http://localhost/Proyecto_SOA/controllers/API.php?cedula=' + row.estCedula;  // URL para POST
+        url = 'https://proyecto-soa.onrender.com/controllers/API.php?cedula=' + row.estCedula;  // URL para POST
     }
 }
 
@@ -143,7 +143,7 @@ function saveUser() {
         $.messager.confirm('Confirmar', '¿Estás seguro de que quieres eliminar este estudiante?', function(r) {
             if (r) {
                 $.ajax({
-                    url: 'http://localhost/Proyecto_SOA/controllers/API.php?cedula=' + row.estCedula, // Cambia a 'cedula'
+                    url: 'https://proyecto-soa.onrender.com/controllers/API.php?cedula=' + row.estCedula, // Cambia a 'cedula'
                     type: 'DELETE',
                     success: function(result) {
                         $('#dg').datagrid('reload');
@@ -178,7 +178,7 @@ function buscarEstudiante() {
 
     // Solo enviar cédula si existe
     $.ajax({
-        url: 'http://localhost/Proyecto_SOA/controllers/API.php?estCedula=' + estCedula + '&estNombre=' + estNombre,
+        url: 'https://proyecto-soa.onrender.com/controllers/API.php?estCedula=' + estCedula + '&estNombre=' + estNombre,
         method: 'GET',
         success: function(result) {
             var estudiantes = JSON.parse(result);

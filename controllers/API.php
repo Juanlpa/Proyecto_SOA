@@ -1,4 +1,8 @@
 <?php
+header("Access-Control-Allow-Origin: *"); // Permite todos los orígenes
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+    
 include_once '../models/CRUD.php';
 
 $crud = new CRUD();

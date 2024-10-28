@@ -45,7 +45,7 @@
         const currentPage = urlParams.get('action') || 'inicio';  // Si no hay 'action', redirigir a 'inicio'
 
         $.ajax({
-            url: 'http://localhost/Proyecto_SOA/controllers/apiLogin.php',
+            url: 'https://proyecto-soa.onrender.com/controllers/apiLogin.php',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ action: 'logout' }),  // Enviar la acción de logout

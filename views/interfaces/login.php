@@ -47,7 +47,7 @@
                 const redirect_page = $('#redirect_page').val();
 
                 $.ajax({
-                    url: 'http://localhost/Proyecto_SOA/controllers/apiLogin.php',
+                    url: 'https://proyecto-soa.onrender.com/controllers/apiLogin.php',
                     method: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({
